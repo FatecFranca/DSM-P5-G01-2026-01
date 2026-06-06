@@ -1,15 +1,187 @@
-# Projeto Integrador (PI)
+#Projeto Integrador (PI)
+
+## Tema do Projeto
+Sistema Inteligente para Classificação de Potabilidade da Água
 
 ## Integrantes
 - Thiago Davanzo
 - Diogo Ramos
 
+## Video
+https://youtu.be/38qmz2szUAE
 
-## Tema do Projeto
-Verificacao da Qualidade da Agua 
+## Visão Geral
 
-## Repositório
-https://github.com/FatecFranca/DSM-P5-G01-2026-01
+Este projeto tem como objetivo analisar parâmetros físico-químicos da água e determinar automaticamente sua potabilidade utilizando técnicas de Aprendizado de Máquina (Machine Learning).
 
-## Status
-Em desenvolvimento
+---
+
+# Arquitetura do Sistema
+
+O projeto é composto pelos seguintes módulos:
+
+## Backend (API)
+
+O backend foi desenvolvido utilizando:
+
+* Node.js
+* Express.js
+* Sequelize ORM
+* PostgreSQL
+
+### Responsabilidades
+
+* Gerenciamento dos dados de análise da água;
+* Persistência das informações no banco de dados;
+* Exposição de APIs REST para comunicação com o frontend e aplicativo móvel;
+* Integração com o serviço de Inteligência Artificial;
+* Controle de usuários e autenticação (quando aplicável).
+
+### Banco de Dados
+
+O PostgreSQL é utilizado para armazenar:
+
+* Amostras de água;
+* Resultados das análises;
+* Histórico de classificações;
+* Informações dos usuários.
+
+O Sequelize atua como camada de abstração entre a aplicação e o banco de dados.
+
+---
+
+## Frontend Web
+
+O frontend foi desenvolvido em JavaScript.
+
+### Funcionalidades
+
+* Cadastro de amostras;
+* Consulta de análises realizadas;
+* Visualização dos resultados de potabilidade;
+* Comunicação com a API através de requisições HTTP.
+
+---
+
+## Aplicativo Mobile
+
+O aplicativo móvel foi desenvolvido utilizando:
+
+* React Native
+* Expo
+* Estrutura Gradle para geração dos builds Android
+
+### Funcionalidades
+
+* Inserção de novas amostras de água;
+* Consulta dos resultados em tempo real;
+* Comunicação direta com os microsserviços da API;
+* Interface otimizada para dispositivos móveis.
+
+---
+
+## Serviço de Inteligência Artificial
+
+O módulo de Inteligência Artificial é responsável pela classificação da potabilidade da água.
+
+### Base de Dados
+
+* pH
+* Chloramines
+* Turbidity
+* Potability
+
+A variável Potability representa a classe alvo:
+
+* 0 = Água não potável
+* 1 = Água potável
+
+---
+
+# Pré-processamento dos Dados
+
+Antes do treinamento do modelo foram executadas as seguintes etapas:
+
+## Tratamento de Dados Ausentes
+
+Os valores ausentes da variável pH foram substituídos pela média da coluna.
+
+## Normalização
+
+Foi aplicada a técnica de padronização Z-Score utilizando StandardScaler para normalizar os atributos.
+
+---
+
+# Modelo de Machine Learning
+
+## Algoritmos Avaliados
+
+Foram considerados os seguintes algoritmos:
+
+* Regressão Logística (LR)
+* Análise Linear Discriminante (LDA)
+* K-Nearest Neighbors (KNN)
+* Classification and Regression Trees (CART)
+* Gaussian Naive Bayes (NB)
+* Support Vector Machines (SVM)
+
+---
+
+## Modelo Selecionado
+
+Para a arquitetura final foi utilizado:
+
+### Support Vector Machine (SVM)
+
+O algoritmo SVM foi integrado ao microsserviço de Inteligência Artificial devido à sua capacidade de encontrar fronteiras de decisão eficientes para problemas de classificação binária.
+
+Características:
+
+* Alta capacidade de generalização;
+* Boa performance em conjuntos de dados de pequena e média dimensão;
+* Robustez contra sobreajuste quando corretamente parametrizado.
+
+---
+
+# Fluxo de Funcionamento
+
+1. O usuário envia uma nova amostra através do aplicativo móvel ou frontend web.
+2. A API recebe os dados e realiza validações.
+3. Os atributos são enviados ao microsserviço de Inteligência Artificial.
+4. O modelo SVM realiza a classificação.
+5. O resultado é retornado para a API.
+6. O resultado é armazenado no PostgreSQL.
+7. O frontend e o aplicativo móvel exibem a classificação ao usuário.
+
+---
+
+# Tecnologias Utilizadas
+
+## Backend
+
+* Node.js
+* Express.js
+* Sequelize
+* PostgreSQL
+
+## Frontend
+
+* JavaScript
+* HTML
+* CSS
+
+## Mobile
+
+* React Native
+* Expo
+* Gradle
+
+## Inteligência Artificial
+
+* Python
+* Scikit-Learn
+* Support Vector Machine (SVM)
+* Pandas
+* NumPy
+
+---

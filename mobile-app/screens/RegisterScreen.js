@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './styles';
 import { register } from "../services/api";
 
@@ -17,7 +18,7 @@ export default function RegisterScreen({ navigation }) {
         setMessage("Usuário registrado com sucesso!");
         navigation.navigate("Login");
       } else {
-        setMessage(data.error || "Usuário e/ou senha incorretos");
+        setMessage(data.error || "Erro ao registrar usuário");
       }
     } catch (error) {
       console.error(error);
@@ -26,42 +27,57 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.registerContainer}>
-      {/* Ícone da gota */}
-      <Image source={require('../assets/water-drop.png')} style={styles.logo} resizeMode="contain" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#e3f2fd' }}>
+      <StatusBar barStyle="dark-content" backgroundColor="#e3f2fd" />
 
-      <Text style={styles.registerTitle}>Registrar Usuário</Text>
+      {/* Header com botão voltar */}
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', padding: 10 }}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={{ color: '#2196f3', fontSize: 16 }}>← Voltar</Text>
+        </TouchableOpacity>
+      </View>
 
-      <TextInput
-        style={styles.registerInput}
-        placeholder="Nome"
-        placeholderTextColor="#90caf9"
-        value={name}
-        onChangeText={setName}
-      />
+      <View style={styles.container}>
+        {/* Logo */}
+        <Image source={require('../assets/water-drop.png')} style={styles.logo} resizeMode="contain" />
 
-      <TextInput
-        style={styles.registerInput}
-        placeholder="Email"
-        placeholderTextColor="#90caf9"
-        value={email}
-        onChangeText={setEmail}
-      />
+        {/* Título */}
+        <Text style={styles.title}>Registrar Usuário</Text>
 
-      <TextInput
-        style={styles.registerInput}
-        placeholder="Senha"
-        placeholderTextColor="#90caf9"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+        {/* Inputs */}
+        <TextInput
+          style={styles.input}
+          placeholder="Nome"
+          placeholderTextColor="#90caf9"
+          value={name}
+          onChangeText={setName}
+        />
 
-      <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-        <Text style={styles.registerButtonText}>Registrar</Text>
-      </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#90caf9"
+          value={email}
+          onChangeText={setEmail}
+        />
 
-      {message ? <Text style={styles.message}>{message}</Text> : null}
-    </View>
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          placeholderTextColor="#90caf9"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+
+        {/* Botão */}
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <Text style={styles.buttonText}>Registrar</Text>
+        </TouchableOpacity>
+
+        {/* Mensagem */}
+        {message ? <Text style={styles.message}>{message}</Text> : null}
+      </View>
+    </SafeAreaView>
   );
 }
