@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "ClassificadorAgua",
+    "slug": "classificador-agua",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": [
+      "android"
+    ],
+    "android": {
+      "package": "org.pidsm5.classificadoragua"
+    },
+    "icon": "./assets/water-drop.png",
+    "extra": {
+      "eas": {
+        "projectId": "6a4db9ca-637a-42d0-823f-7c5e72a24f96"
+      }
+    }
+  }
+}
